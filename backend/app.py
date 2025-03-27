@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import sqlite3
 import random
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:8000"])
 
 DB_PATH = "quiz.db"
 
@@ -13,9 +15,11 @@ def get_quiz():
     cursor = conn.cursor()
 
     # 1問ランダムに取得
-    cursor.execute(""""
-        SELECT id, question FROM questions
-        ORDER BY RANDOM() LIMIT 1;
+    cursor.execute("""
+        SELECT id, question
+        FROM questions
+        ORDER BY RANDOM()
+        LIMIT 1;
     """)
     question_row = cursor.fetchone()
 
@@ -25,8 +29,9 @@ def get_quiz():
     question_id, question_text = question_row
 
     # 選択肢を取得
-    cursor.execute(""""
-        SELECT text, is_correct FROM choices
+    cursor.execute("""
+        SELECT text, is_correct
+        FROM choices
         WHERE question_id = ?;
     """, (question_id,))
     choices_data = cursor.fetchall()
@@ -43,3 +48,6 @@ def get_quiz():
         "choices": choices,
         "correct_index": correct_index
     })
+
+if __name__ == "__main__":
+    app.run(debug=True)
