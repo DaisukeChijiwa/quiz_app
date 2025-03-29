@@ -47,6 +47,9 @@
 |`question`     | string     | 問題文                |
 |`choices`      | JSON/text  | 選択肢（配列）         |
 |`correct_index`| int        | 正解選択肢のインデックス |
+|`difficulty`   | string     | 難易度                |
+|`is_gold`      | boolean    | Gold問題のラベル       |
+|`explanation`  | string     | 解説表示（後で拡張）    |
 
 ---
 

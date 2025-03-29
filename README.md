@@ -21,3 +21,7 @@ A 4-choice quiz web service with Flask and TypeScript.
 - `/frontend`: TypeScript + HTML/CSS UI
 - `/data`: Question data
 - `/docs`: Design documents
+
+## ToDo
+
+- See [TODO.md](TODO.md)
