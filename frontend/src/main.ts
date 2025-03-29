@@ -46,15 +46,24 @@ function loadHardCodedQuiz(): void {
         button.textContent = choice;
 
         button.onclick = () => {
+            const allButtons = document.querySelectorAll("#choices button");
+            allButtons.forEach(btn => (btn as HTMLButtonElement).disabled = true);
+
             if (index === q.correctIndex) {
+                button.classList.add("correct");
                 correctCount++;
-                alert("正解！");
             } else {
-                alert("不正解！");
+                button.classList.add("incorrect");
+
+                // 正解を緑で表示
+                const correctButton = allButtons[q.correctIndex] as HTMLButtonElement;
+                correctButton.classList.add("correct");
             }
 
-            currentIndex++;
-            loadHardCodedQuiz();
+            setTimeout(() => {
+                currentIndex++;
+                loadHardCodedQuiz();
+            }, 1000);
         };
 
         li.appendChild(button);

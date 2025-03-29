@@ -14,3 +14,20 @@ button {
     display: block;
     margin: 0.5em 0;
 }
+
+.correct {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: bold;
+}
+
+.incorrect {
+    background-color: #f8d7da;
+    color: #721c24;
+    text-decoration: line-through;
+}
+
+button:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
