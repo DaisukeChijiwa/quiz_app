@@ -4,23 +4,27 @@ interface Question {
     question: string;
     choices: string[];
     correctIndex: number;
+    explanation: string;
 }
 
 const sampleQuestions: Question[] = [
     {
         question: "Pythonでリストを逆順にするメソッドはどれ？",
         choices: ["reverse()", "flip()", "sort()", "invert()"],
-        correctIndex: 0
+        correctIndex: 0,
+        explanation: "reverse()はリスト自身をインプレースで逆順にするメソッドです。"
     },
     {
         question: "期待値を表す記号はどれ？",
         choices: ["E[X]", "V(X)", "μ", "σ^2"],
-        correctIndex: 0
+        correctIndex: 0,
+        explanation: "期待値はE[X]と表されます。V(X)は分散、μは母平均、σ^2も分散です。"
     },
     {
         question: "pandasでCSVを読み込む方法はどれ？",
         choices: ["read_csv()", "load_csv()", "import_csv()", "download_csv()"],
-        correctIndex: 0
+        correctIndex: 0,
+        explanation: "read_csv()には引数としてファイル名を含めた相対パスを渡します。"
     }
 ]
 
@@ -28,12 +32,23 @@ let currentIndex = 0;
 let correctCount = 0;
 
 function loadHardCodedQuiz(): void {
+    // 最初に「次へ」ボタンを非アクティブに戻す
+    const nextButton = document.getElementById("next-button") as HTMLButtonElement;
+    nextButton.disabled = true;
+    nextButton.classList.remove("enabled");
+    nextButton.onclick = null;
+    
     if (currentIndex >= sampleQuestions.length) {
         showResult();
         return;
     }
 
     const q = sampleQuestions[currentIndex];
+    // 最初に解説を消す処理
+    const explanationEl = document.getElementById("explanation")!;
+    explanationEl.classList.add("invisible");
+    explanationEl.innerHTML = "&nbsp;";
+    explanationEl.textContent = "";
     const questionEl = document.getElementById("question")!;
     const choicesEl = document.getElementById("choices")!;
 
@@ -60,10 +75,22 @@ function loadHardCodedQuiz(): void {
                 correctButton.classList.add("correct");
             }
 
-            setTimeout(() => {
+            // 解説表示
+            explanationEl.textContent = q.explanation;
+            explanationEl.classList.remove("invisible");
+            console.log("解説表示の実行");
+
+            nextButton.disabled = false;
+            nextButton.classList.add("enabled");
+            nextButton.onclick = () => {
                 currentIndex++;
                 loadHardCodedQuiz();
-            }, 1000);
+            };
+
+            // setTimeout(() => {
+            //     currentIndex++;
+            //     loadHardCodedQuiz();
+            // }, 1000);
         };
 
         li.appendChild(button);

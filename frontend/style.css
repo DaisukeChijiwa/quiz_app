@@ -10,24 +10,80 @@ body {
     width: 400px;
 }
 
+ul#choices {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+ul#choices li {
+    margin-bottom: 10px;
+}
+
 button {
     display: block;
     margin: 0.5em 0;
 }
 
+#choices button {
+    border: 2px solid transparent;
+    padding: 10px 16px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .correct {
     background-color: #d4edda;
     color: #155724;
-    font-weight: bold;
+    border-color: #28a745;
 }
 
 .incorrect {
     background-color: #f8d7da;
     color: #721c24;
     text-decoration: line-through;
+    border-color: #dc3545;
 }
 
 button:disabled {
     opacity: 0.6;
     pointer-events: none;
+}
+
+.hidden {
+    display: none;
+}
+
+#next-button {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 16px;
+    transition: background-color 0.2s ease;
+}
+
+#next-button.enabled {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#next-button.enabled:hover {
+    background-color: #0056b3;
+}
+
+#explanation {
+    min-height: 2.5em;
+    margin-top: 12px;
+    transition: visibility 0.2s ease, opacity 0.2s ease;
+}
+
+#explanation.invisible {
+    visibility: hidden;
+    opacity: 0;
 }
