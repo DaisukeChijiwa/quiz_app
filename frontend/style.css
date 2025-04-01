@@ -58,7 +58,6 @@ button:disabled {
 #next-button {
     background-color: #ccc;
     color: #666;
-    cursor: not-allowed;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -75,6 +74,11 @@ button:disabled {
 
 #next-button.enabled:hover {
     background-color: #0056b3;
+}
+
+#next-button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 #explanation {

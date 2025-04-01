@@ -1,24 +1,9 @@
-import { Question } from "./questions.js";
-import { sampleQuestions } from "./questions.js";
+import { Question, Genre, sampleQuestions } from "./questions.js";
 
-let currentIndex = 0;
-
-export function getCurrentQuiz(): Question | null {
-    if (currentIndex >= sampleQuestions.length) return null;
-    return sampleQuestions[currentIndex];
-}
-
-export function advanceQuiz() {
-    currentIndex++;
-}
-
-export function resetQuiz() {
-    currentIndex = 0;
-}
-
-export function getScore() {
-    return {
-        total: sampleQuestions.length,
-        current: currentIndex
-    };
+export function filterQuestions(genre: string, difficulty: number): Question[] {
+    return sampleQuestions.filter((q) => {
+        const genreMatch = genre === "all" || q.genre.includes(genre as Genre);
+        const difficultyMatch = isNaN(difficulty) || q.difficulty === difficulty;
+        return genreMatch && difficultyMatch;
+    });
 }

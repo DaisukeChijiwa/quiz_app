@@ -7,6 +7,31 @@
     </head>
     <body>
         <h1>クイズに挑戦！</h1>
+        <div id ="quiz-config">
+            <!-- ジャンル選択 -->
+            <label for="genre-select">ジャンル:</label>
+            <select id="genre-select">
+                <option value="all">すべて</option>
+                <option value="python">Python</option>
+                <option value="statistics">統計</option>
+                <option value="data_science">データサイエンス</option>
+                <option value="sql">SQL</option>
+                <option value="rust">Rust</option>
+            </select>
+
+            <!-- 難易度選択 -->
+            <label for="difficulty-select">難易度:</label>
+            <select id="difficulty-select">
+                <option value="all">すべて</option>
+                <option value="1">初級</option>
+                <option value="2">中級</option>
+                <option value="3">上級</option>
+            </select>
+
+            <!-- 開始ボタン -->
+            <button id="start-button">クイズ開始</button>
+        </div>
+        
         <div id="quiz-container">
             <p id="question">読み込み中...</p>
             <ul id="choices"></ul>

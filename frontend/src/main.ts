@@ -1,43 +1,36 @@
 console.log("main.ts loaded");
-import { sampleQuestions, Question } from "./questions.js";
-import { getCurrentQuiz, advanceQuiz } from "./quizLoader.js";
-import { renderQuiz, showExplanation, activateNext, showResult } from "./renderer.js";
+import { filterQuestions } from "./quizLoader.js";
+import { renderQuiz, showResult } from "./renderer.js";
+import { setupConfigForm } from "./configForm.js";
+import { QuizEngine } from "./quizEngine.js";
 
-let currentIndex = 0;
-let correctCount = 0;
+let engine: QuizEngine;
 
-function loadNextQuiz() {
-    if (currentIndex >= sampleQuestions.length) {
-        showResult(correctCount, sampleQuestions.length);
+setupConfigForm((genre, difficulty) => {
+    const filtered = filterQuestions(genre, difficulty);
+    if (filtered.length === 0) {
+        alert("条件に合う問題が見つかりません。");
         return;
     }
 
-    const q = sampleQuestions[currentIndex];
+    engine = new QuizEngine(filtered);
+    loadNextQuestion();
+});
 
+function loadNextQuestion() {
+    if (engine.isFinished()) {
+        const { correct, total } = engine.getScore();
+        showResult(correct, total);
+        return;
+    }
+
+    const q = engine.getCurrentQuestion();
     renderQuiz(q, (selectedIndex: number) => {
         const isCorrect = selectedIndex === q.correctIndex;
-
-        const buttons = document.querySelectorAll("#choices button") as NodeListOf<HTMLButtonElement>;
-        buttons.forEach((btn, idx) => {
-            btn.disabled = true;
-            if (idx === q.correctIndex) {
-                btn.classList.add("correct");
-            } else if (idx === selectedIndex) {
-                btn.classList.add("incorrect");
-            }
-        });
-
-        if (isCorrect) correctCount++;
-
-        showExplanation(q.explanation);
-        activateNext(() => {
-            currentIndex++;
-            loadNextQuiz();
-        });
+        engine.answer(isCorrect);
+        loadNextQuestion();
     });
 }
-
-loadNextQuiz();
 
 // function loadHardCodedQuiz(): void {
 //     // 最初に「次へ」ボタンを非アクティブに戻す
